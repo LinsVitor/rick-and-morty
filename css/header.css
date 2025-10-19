@@ -1,0 +1,74 @@
+header {
+	width: 100%;
+	background-color: var(--background-header-color);
+	padding: var(--spacing-large) 17.7% 0 17.7%;
+}
+.header__topbar {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: var(--spacing-large);
+
+	.header__fav-btn {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		background-color: var(--primary-color);
+		height: fit-content;
+		border: none;
+		border-radius: var(--border-radius-small);
+		padding: var(--padding-small);
+		cursor: pointer;
+		transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+	}
+}
+.header__main {
+	display: flex;
+
+	.header__info {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+		margin-right: var(--spacing-large);
+
+		.header__title {
+			font-size: var(--font-size-large);
+			font-weight: 700;
+
+			span {
+				color: var(--primary-color);
+			}
+		}
+	}
+	.header__subtitle {
+		margin-bottom: var(--spacing-large);
+	}
+	.header__theme-switcher {
+		display: flex;
+		gap: var(--spacing);
+
+		.header__btn-dark,
+		.header__btn-light {
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+			background-color: var(--secondary-color);
+			border: none;
+			padding: var(--padding-small);
+			border-radius: var(--border-radius-small);
+			cursor: pointer;
+			transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+		}
+	}
+	.header__meme {
+		color: var(--primary-color);
+	}
+	.header__img {
+		width: 48.375rem;
+	}
+}
+
+.header__btn-dark:hover,
+.header__btn-light:hover,
+.header__fav-btn:hover {
+	transform: scale(1.1);
+}
