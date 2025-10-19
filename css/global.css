@@ -61,3 +61,6 @@ button {
 i {
 	font-size: var(--font-size-medium);
 }
+.bx-pulse {
+	color: #BFDE42;
+}
