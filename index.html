@@ -14,7 +14,7 @@
 			rel="stylesheet"
 		/>
 		<link rel="stylesheet" href="css/global.css" />
-		<script src="script/app.js" defer></script>
+		<script type="module" src="script/app.js" defer></script>
 		<title>Rick and Morty</title>
 	</head>
 	<body>
@@ -53,9 +53,30 @@
 		</header>
 		<main>
 			<search class="main__search">
-				<input class="main__input-search" type="text" placeholder="Personagem, episódio, localização...">
+				<input
+					class="main__input-search"
+					type="text"
+					placeholder="Personagem, episódio, localização..."
+				/>
 				<i class="bx-search"></i>
 			</search>
+			<section class="main__character-container">
+				<h2 class="main__title">Personagens</h2>
+				<div class="main__character-grid" id="character-grid">
+				</div>
+				<nav class="main__nav">
+					<button class="main__nav-btn"><i class="bx-chevron-left"></i></button>
+					<ul>
+						<li>1</li>
+						<li>2</li>
+						<li>3</li>
+						<li>4</li>
+					</ul>
+					<button class="main__nav-btn">
+						<i class="bx-chevron-right"></i>
+					</button>
+				</nav>
+			</section>
 		</main>
 		<footer></footer>
 	</body>
