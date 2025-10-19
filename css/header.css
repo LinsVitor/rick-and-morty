@@ -70,5 +70,5 @@ header {
 .header__btn-dark:hover,
 .header__btn-light:hover,
 .header__fav-btn:hover {
-	transform: scale(1.1);
+	transform: scale(1.04);
 }
