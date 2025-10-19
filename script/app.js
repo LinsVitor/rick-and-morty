@@ -1,5 +1,5 @@
 "use strict";
-import { Character, Episode, Location } from "./utils/Rickdex.js";
+import { Character, Episode, Location } from "./utils/rickdex.js";
 import { translate } from "./utils/translate.js";
 import { arrayOfNumbers } from "./utils/arrayofnumbers.js";
 
