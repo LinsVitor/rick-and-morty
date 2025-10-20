@@ -7,7 +7,8 @@ class Rickdex {
 
 	async info() {
 		const response = await fetch(this.url);
-		return await response.json();
+		const dados = await response.json();
+		return dados["info"];
 	}
 
 	async getAll(ids = null) {
