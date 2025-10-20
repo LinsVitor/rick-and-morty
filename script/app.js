@@ -12,6 +12,7 @@ const location = new Location();
 async function updateScreenCharacter(ids) {
 	const characterGrid = document.getElementById("character-grid");
 	const characters = await character.getAll(ids);
+	characterGrid.innerHTML = "";
 	for (const character of characters) {
 		const characterCard = `
       <article class="main__card">
@@ -38,4 +39,34 @@ async function updateScreenCharacter(ids) {
 	}
 }
 
+async function navigationCharacter() {
+	const startArray = [0, 7];
+	let page = 1;
+	const maxPage = await character.info().then((dados) => dados["pages"] * 2.5);
+	const nextChar = document.getElementById("nextChar");
+	const prevChar = document.getElementById("prevChar");
+
+	nextChar.addEventListener("click", (event) => {
+		if (page >= 1 && page <= maxPage) {
+			updateScreenCharacter(
+				arrayOfNumbers(startArray[0] + 8, startArray[1] + 8)
+			);
+			startArray[0] += 8;
+			startArray[1] += 8;
+			page++;
+		}
+	});
+	prevChar.addEventListener("click", (event) => {
+		if (page > 1) {
+			updateScreenCharacter(
+				arrayOfNumbers(startArray[0] - 8, startArray[1] - 8)
+			);
+			startArray[0] -= 8;
+			startArray[1] -= 8;
+			page--;
+		}
+	});
+}
+
 updateScreenCharacter(arrayOfNumbers(0, 7));
+navigationCharacter();
