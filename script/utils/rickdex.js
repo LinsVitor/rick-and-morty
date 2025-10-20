@@ -5,36 +5,36 @@ class Rickdex {
 		this.url = URL;
 	}
 
-	async info() {
-		const response = await fetch(this.url);
-		const dados = await response.json();
-		return dados["info"];
+	info() {
+		return fetch(this.url)
+			.then((response) => response.json())
+			.then((info) => info["info"]);
 	}
 
-	async getAll(ids = null) {
+	getAll(ids = null) {
 		if (ids == null) {
 			const result = [];
-			const info = await this.info();
+			const info = this.info();
 			let page = 1;
 			const pages = info["info"]["pages"];
 			while (page <= pages) {
-				const resp = await fetch(`${this.url}/?page=${page}`);
-				const results = await resp.json();
-				result.push(results["results"]);
+				const results = fetch(`${this.url}/?page=${page}`)
+					.then((response) => response.json())
+					.then((results) => results["results"]);
+				result.push(results);
 				page++;
 			}
 			return result;
 		} else {
-			const response = await fetch(`${this.url}/${ids}`);
-			return await response.json();
+			return fetch(`${this.url}/${ids}`).then((response) => response.json());
 		}
 	}
 
-	async getOne(id) {
-		return await fetch(`${this.url}/${id}`).then((response) => response.json());
+	getOne(id) {
+		return fetch(`${this.url}/${id}`).then((response) => response.json());
 	}
 
-	async apiFilter(params = {}) {
+	apiFilter(params = {}) {
 		const parameters = [
 			"name",
 			"status",
@@ -50,9 +50,7 @@ class Rickdex {
 				query.set(key, params[key]);
 			}
 		});
-		return await fetch(`${this.url}/?${query}`).then((response) =>
-			response.json()
-		);
+		return fetch(`${this.url}/?${query}`).then((response) => response.json());
 	}
 
 	async itemFilter(ids, ...filter) {
@@ -60,7 +58,6 @@ class Rickdex {
 			const result = {};
 			const element = await this.getOne(ids);
 			for (let item of filter) {
-				console.log(item);
 				result[item] = element[item];
 			}
 			return result;
