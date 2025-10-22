@@ -36,8 +36,8 @@ export function arrayOfNumbers(start, end, step = 1) {
 
 // Função para truncar uma string
 export function truncate(string) {
-	if (string.length > 25) {
-		return `${string.slice(0, 25)}...`;
+	if (string.length > 20) {
+		return `${string.slice(0, 20)}...`;
 	} else {
 		return string;
 	}
