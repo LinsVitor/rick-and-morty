@@ -1,25 +1,36 @@
 "use strict";
 // Pequeno banco de palavras para traduções
-const words = {
-	Alive: "Vivo",
-	Dead: "Morto",
-	unknown: "desconhecido",
-	Female: "Mulher",
-	Male: "Homem",
-	Genderless: "Sem sexo",
-	Human: "Humano",
-	Alien: "Alienígena",
-	Earth: "Terra",
-	"Earth (Replacement Dimension)": "Terra Alternativa",
-	"Earth (C-137)": "Terra (C-137)",
+const translations = {
+	status: {
+		Alive: "Vivo",
+		Dead: "Morto",
+		unknown: "desconhecido",
+	},
+	gender: {
+		Male: "Homem",
+		Female: "Mulher",
+		Genderless: "sem sexo",
+		unknown: "desconhecido",
+	},
+	species: {
+		Human: "Humano",
+		Alien: "Alienígena",
+		Humanoid: "Humanoide",
+		Robot: "Robô",
+		"Mythological Creature": "Criatura Mitológica",
+		unknown: "desconhecido"
+	},
+	origin: {
+		unknown: "desconhecido"
+	}
 };
 
 // Função para realizar a tradução das palavras
-export function translate(word) {
-	if (word in words) {
-		return words[word];
-	} else {
-		return truncate(word);
+export function translate(category, key) {
+	if (key.startsWith("Earth")) {
+		return truncate(key.replace("Earth", "Terra"));
+	}else {
+		return translations[category]?.[key] || truncate(key);
 	}
 }
 
