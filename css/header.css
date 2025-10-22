@@ -19,7 +19,7 @@ header {
 		border-radius: var(--border-radius-small);
 		padding: var(--padding-small);
 		cursor: pointer;
-		transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+		transition: transform 0.2s;
 	}
 }
 .header__main {

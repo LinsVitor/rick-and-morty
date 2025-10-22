@@ -1,26 +1,31 @@
 "use strict";
 import { Character, Episode, Location } from "./utils/rickdex.js";
-import { translate } from "./utils/translate.js";
-import { arrayOfNumbers } from "./utils/arrayofnumbers.js";
+import { translate, arrayOfNumbers, truncate } from "./utils/utils.js";
 
 // Instancia as classes responsável por manipular a API
 const character = new Character();
 const episode = new Episode();
 const location = new Location();
 
-// Função responsável por atualizar as informações da tela na seção dos personagens
-async function updateScreenCharacter(ids) {
-	const characterGrid = document.getElementById("character-grid");
-	const characters = await character.getAll(ids);
-	characterGrid.innerHTML = "";
-	for (const character of characters) {
-		const characterCard = `
-      <article class="main__card">
+// Função responsável por atualizar as informações da tela
+async function updateScreen(type, ids) {
+	const mainGrid = document.getElementById("mainGrid");
+	const mainTitle = document.getElementById("mainTitle");
+	const elements = await type.getAll(ids);
+	
+	switch (type) {
+		case character:
+			mainTitle.innerText = "Personagens";
+			mainGrid.classList.add("main__character-grid");
+			mainGrid.innerHTML = "";
+			for (const character of elements) {
+				const characterCard = `
+    		<article class="main__card">
 				<img
 					src="${character.image}"
 						alt="Imagem do ${character.name}"
 						/>
-				<h3 class="main__character-name">${character.name.slice(0, 20)}</h3>
+				<h3 class="main__character-name">${truncate(character.name)}</h3>
 				<ul class="main__character-info">
 					<li><i class="bx-pulse"></i>${translate(character.status)}</li>
 					<li><i class="bx-alien"></i>${translate(character.species)}</li>
@@ -35,38 +40,47 @@ async function updateScreenCharacter(ids) {
 				</button>
 				</div>
 			</article>`;
-		characterGrid.innerHTML += characterCard;
+				mainGrid.innerHTML += characterCard;
+			}
+			break;
+		case episode:
+			break;
+		case location:
+			break;
 	}
 }
 
-async function navigationCharacter() {
-	const startArray = [0, 7];
+// Função com a lógica de paginação
+async function navigation(type, ids) {
+	let startArray = ids;
 	let page = 1;
-	const maxPage = await character.info().then((dados) => dados["pages"] * 2.5);
-	const nextChar = document.getElementById("nextChar");
-	const prevChar = document.getElementById("prevChar");
+	const maxPage = await type.info().then((dados) => dados["count"] / 8);
+	const nextPage = document.getElementById("nextPage");
+	const prevPage = document.getElementById("prevPage");
+	nextPage.addEventListener("click", nextCharacter);
+	prevPage.addEventListener("click", previousCharacter);
 
-	nextChar.addEventListener("click", (event) => {
+	function nextCharacter() {
 		if (page >= 1 && page <= maxPage) {
-			updateScreenCharacter(
-				arrayOfNumbers(startArray[0] + 8, startArray[1] + 8)
-			);
+			updateScreen(type, arrayOfNumbers(startArray[0] + 8, startArray[1] + 8));
 			startArray[0] += 8;
 			startArray[1] += 8;
 			page++;
 		}
-	});
-	prevChar.addEventListener("click", (event) => {
+	}
+
+	function previousCharacter() {
 		if (page > 1) {
-			updateScreenCharacter(
-				arrayOfNumbers(startArray[0] - 8, startArray[1] - 8)
-			);
+			updateScreen(type, arrayOfNumbers(startArray[0] - 8, startArray[1] - 8));
 			startArray[0] -= 8;
 			startArray[1] -= 8;
 			page--;
 		}
-	});
+	}
 }
 
-updateScreenCharacter(arrayOfNumbers(0, 7));
-navigationCharacter();
+window.onload = function () {
+	updateScreen(character, arrayOfNumbers(0, 7));
+};
+
+navigation(character, [0, 7]);

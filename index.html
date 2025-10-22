@@ -52,26 +52,42 @@
 			</div>
 		</header>
 		<main>
-			<search class="main__search">
-				<input
-					class="main__input-search"
-					type="text"
-					placeholder="Personagem, episódio, localização..."
-				/>
-				<i class="bx-search"></i>
-			</search>
-			<section class="main__character-container">
-				<h2 class="main__title">Personagens</h2>
-				<div class="main__character-grid" id="character-grid"></div>
+			<div class="main__search-container">
+				<search class="main__search">
+					<input
+						class="main__input-search"
+						type="text"
+						placeholder="Personagem, episódio, localização..."
+					/>
+					<i class="bx-search"></i>
+				</search>
+				<ul class="main__filter">
+					<li>Filtrar por:</li>
+					<li>
+						<button><i class="bx-smile"></i>Personagens</button>
+					</li>
+					<li>
+						<button><i class="bx-planet"></i>Localizações</button>
+					</li>
+					<li>
+						<button><i class="bx-movie-play"></i>Episódios</button>
+					</li>
+				</ul>
+			</div>
+			<section class="main__container">
+				<h2 class="main__title" id="mainTitle"></h2>
+				<div id="mainGrid"></div>
 				<nav class="main__nav">
-					<button id="prevChar" class="main__nav-btn"><i class="bx-chevron-left"></i></button>
+					<button id="prevPage" class="main__nav-btn">
+						<i class="bx-chevron-left"></i>
+					</button>
 					<ul id="pageCounter">
 						<li class="main__active-page">1</li>
 						<li>2</li>
 						<li>3</li>
 						<li>4</li>
 					</ul>
-					<button id="nextChar" class="main__nav-btn">
+					<button id="nextPage" class="main__nav-btn">
 						<i class="bx-chevron-right"></i>
 					</button>
 				</nav>
