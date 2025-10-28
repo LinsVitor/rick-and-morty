@@ -7,26 +7,51 @@ const character = new Character();
 const episode = new Episode();
 const location = new Location();
 
+const mainGrid = document.getElementById("mainGrid");
+const mainTitle = document.getElementById("mainTitle");
+
+let currentView = {
+	type: null,
+	ids: [],
+	step: 0,
+	page: 1,
+	maxPage: 1,
+};
+
+// Objeto contendo os valores inicias de cada categoria
+const category = {
+	character: {
+		title: "Personagens",
+		ids: [0, 7],
+		step: 8,
+	},
+	episode: {
+		title: "Episódios",
+		ids: [0, 5],
+		step: 6,
+	},
+};
+
 // Função responsável por atualizar as informações da tela
 async function updateScreen(type, ids) {
-	const mainGrid = document.getElementById("mainGrid");
-	const mainTitle = document.getElementById("mainTitle");
 	const elements = await type.getAll(ids);
+	let cards = "";
+	mainGrid.innerHTML = "";
 
 	switch (type) {
 		case character:
-			mainTitle.innerText = "Personagens";
+			mainTitle.innerText = category["character"].title;
+			mainGrid.classList.remove("main__episode-grid");
 			mainGrid.classList.add("main__character-grid");
-			mainGrid.innerHTML = "";
+
 			for (const character of elements) {
-				console.log(character);
 				const characterCard = `
     		<article class="main__card">
 				<img
 					src="${character.image}"
 						alt="Imagem do ${character.name}"
 						/>
-				<h3 class="main__character-name">${truncate(character.name)}</h3>
+				<h3 class="main__character-name">${truncate(character.name, 24)}</h3>
 				<ul class="main__character-info">
 					<li><i class="bx-pulse"></i>${translate("status", character.status)}</li>
 					<li><i class="bx-alien"></i>${translate("species", character.species)}</li>
@@ -36,58 +61,86 @@ async function updateScreen(type, ids) {
 				<button class="main__character-info-btn">
 					<i class="bx-info-circle"></i>Saiba mais
 				</button>
-				<button class="main__character-fav-btn">
+				<button class="main__fav-btn">
 					<i class="bx-heart"></i>
 				</button>
 				</div>
 			</article>`;
-				mainGrid.innerHTML += characterCard;
+				cards += characterCard;
 			}
+			mainGrid.innerHTML += cards;
 			break;
 		case episode:
+			mainTitle.innerText = category["episode"].title;
+			mainGrid.classList.remove("main__character-grid");
+			mainGrid.classList.add("main__episode-grid");
+
+			for (const episode of elements) {
+				const episodeCard = `
+				<article class="main__card">
+					<div class="main__episode-icon">
+						<i class="bx-movie-play"></i
+						><button class="main__fav-btn"><i class="bx-heart"></i></button>
+					</div>
+					<h3 class="main__episode-name">${truncate(episode.name, 36)}</h3>
+					<div class="main__episode-date">
+						<p class="main__episode-info">
+							<i class="bx-calendar"></i>${episode.air_date}
+						</p>
+						<p class="main__episode-info"><i class="bx-tv"></i>${episode.episode}</p>
+					</div>
+					<p class="main__episode-info">
+						<i class="bx-smile"></i>${episode.characters.length} Personagens participaram deste episódio
+					</p>
+				</article>
+				`;
+				cards += episodeCard;
+			}
+			mainGrid.innerHTML = cards;
 			break;
 		case location:
 			break;
 	}
 }
 
-// Função com a lógica de paginação
-async function navigation(type, ids, step) {
-	let startArray = ids;
-	let page = 1;
-	const maxPage = await type.info().then((dados) => dados["count"] / step);
-	const nextPage = document.getElementById("nextPage");
-	const prevPage = document.getElementById("prevPage");
-	nextPage.addEventListener("click", nextCharacter);
-	prevPage.addEventListener("click", previousCharacter);
-
-	function nextCharacter() {
-		if (page >= 1 && page <= maxPage) {
-			updateScreen(
-				type,
-				arrayOfNumbers(startArray[0] + step, startArray[1] + step)
-			);
-			startArray[0] += step;
-			startArray[1] += step;
-			page++;
-		}
-	}
-
-	function previousCharacter() {
-		if (page > 1) {
-			updateScreen(
-				type,
-				arrayOfNumbers(startArray[0] - step, startArray[1] - step)
-			);
-			startArray[0] -= step;
-			startArray[1] -= step;
-			page--;
-		}
+function goToNextPage() {
+	if (currentView.page < currentView.maxPage) {
+		currentView.page++;
+		currentView.ids[0] += currentView.step;
+		currentView.ids[1] += currentView.step;
+		updateScreen(currentView.type, arrayOfNumbers(currentView.ids[0], currentView.ids[1]));
 	}
 }
 
+function goToPreviousPage() {
+	if (currentView.page > 1) {
+		currentView.page--;
+		currentView.ids[0] -= currentView.step;
+		currentView.ids[1] -= currentView.step;
+		updateScreen(currentView.type, arrayOfNumbers(currentView.ids[0], currentView.ids[1]));
+	}
+}
+
+// Função responsável por alterar o conteúdo exibido na tela
+async function changeCategory(type, ids, step) {
+	currentView.type = type;
+	currentView.ids = ids;
+	currentView.step = step;
+	const info = await type.info();
+	currentView.maxPage = Math.ceil(info.count / currentView.step);
+	updateScreen(currentView.type, arrayOfNumbers(currentView.ids[0], currentView.ids[1]));
+}
+
 window.onload = function () {
-	updateScreen(character, arrayOfNumbers(0, 7));
+	changeCategory(character, category["character"].ids, category["character"].step);
+	this.document.getElementById("nextPage").addEventListener("click", goToNextPage);
+	this.document.getElementById("prevPage").addEventListener("click", goToPreviousPage);
 };
 
-navigation(character, [0, 7], 8);
+document.getElementById("episode").addEventListener("click", (event) => {
+	changeCategory(episode, category["episode"].ids, category["episode"].step);
+});
+
+document.getElementById("character").addEventListener("click", (event) => {
+	changeCategory(character, category["character"].ids, category["character"].step);
+});
