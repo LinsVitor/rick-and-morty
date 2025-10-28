@@ -28,9 +28,9 @@ const translations = {
 // Função para realizar a tradução das palavras
 export function translate(category, key) {
 	if (key.startsWith("Earth")) {
-		return truncate(key.replace("Earth", "Terra"));
+		return truncate(key.replace("Earth", "Terra"), 24);
 	}else {
-		return translations[category]?.[key] || truncate(key);
+		return translations[category]?.[key] || truncate(key, 24);
 	}
 }
 
@@ -46,9 +46,9 @@ export function arrayOfNumbers(start, end, step = 1) {
 }
 
 // Função para truncar uma string
-export function truncate(string) {
-	if (string.length > 20) {
-		return `${string.slice(0, 20)}...`;
+export function truncate(string, length) {
+	if (string.length > length) {
+		return `${string.slice(0, length)}...`;
 	} else {
 		return string;
 	}
