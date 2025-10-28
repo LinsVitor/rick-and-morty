@@ -46,7 +46,7 @@ main {
 				transition: transform 0.2s;
 			}
 			button:hover {
-				transform: scale(1.04)
+				transform: scale(1.04);
 			}
 		}
 	}
@@ -92,15 +92,37 @@ main {
 				border: transparent;
 				cursor: pointer;
 			}
+		}
+	}
 
-			.main__character-fav-btn {
-				display: contents;
-				cursor: pointer;
+	.main__episode-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, 24.8rem);
+		row-gap: var(--spacing);
+		column-gap: var(--spacing);
+		margin-bottom: var(--spacing-large);
 
-				.bx-heart {
-					font-size: var(--font-size-large);
-				}
+		.main__episode-icon {
+			display: flex;
+			justify-content: space-between;
+
+			.bx-movie-play {
+				font-size: var(--font-size-large);
 			}
+		}
+
+		.main__episode-name {
+			font-weight: 700;
+		}
+
+		.main__episode-date {
+			display: flex;
+			gap: var(--spacing-medium);
+		}
+		.main__episode-info {
+			display: flex;
+			align-items: center;
+			gap: 0.25rem;
 		}
 	}
 }
@@ -153,4 +175,12 @@ main {
 	border: 1px solid var(--primary-color) !important;
 	border-radius: 50%;
 	background-color: var(--primary-color);
+}
+.main__fav-btn {
+	display: contents;
+	cursor: pointer;
+
+	.bx-heart {
+		font-size: var(--font-size-large);
+	}
 }
