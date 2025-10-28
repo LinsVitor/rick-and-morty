@@ -11,17 +11,17 @@ class Rickdex {
 			.then((info) => info["info"]);
 	}
 
-	getAll(ids = null) {
+	async getAll(ids = null) {
 		if (ids == null) {
 			const result = [];
-			const info = this.info();
+			const info = await this.info();
 			let page = 1;
-			const pages = info["info"]["pages"];
+			const pages = info.pages;
 			while (page <= pages) {
 				const results = fetch(`${this.url}/?page=${page}`)
 					.then((response) => response.json())
-					.then((results) => results["results"]);
-				result.push(results);
+					.then((results) => results.results);
+				result.push(await results);
 				page++;
 			}
 			return result;
@@ -35,15 +35,7 @@ class Rickdex {
 	}
 
 	apiFilter(params = {}) {
-		const parameters = [
-			"name",
-			"status",
-			"species",
-			"type",
-			"gender",
-			"dimension",
-			"episode",
-		];
+		const parameters = ["name", "status", "species", "type", "gender", "dimension", "episode"];
 		let query = new URLSearchParams({});
 		Object.keys(params).forEach((key) => {
 			if (parameters.includes(key)) {
