@@ -9,10 +9,7 @@
 			href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
 			rel="stylesheet"
 		/>
-		<link
-			href="https://cdn.boxicons.com/fonts/basic/boxicons.min.css"
-			rel="stylesheet"
-		/>
+		<link href="https://cdn.boxicons.com/fonts/basic/boxicons.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="css/global.css" />
 		<script type="module" src="script/app.js" defer></script>
 		<title>Rick and Morty</title>
@@ -20,57 +17,38 @@
 	<body>
 		<header>
 			<div class="header__topbar">
-				<img
-					src="assets/img/LogoAzul.svg"
-					alt="Logo de Rick and Morty na cor azul"
-				/>
-				<button class="header__fav-btn">
-					<i class="bx-heart"></i>Lista de favoritos
-				</button>
+				<img src="assets/img/LogoAzul.svg" alt="Logo de Rick and Morty na cor azul" />
+				<button class="header__fav-btn"><i class="bx-heart"></i>Lista de favoritos</button>
 			</div>
 			<div class="header__main">
 				<div class="header__info">
 					<h1 class="header__title">Saiba tudo em um só <span>lugar.</span></h1>
-					<p class="header__subtitle">
-						Personagens, localizações, episódios e muito mais
-					</p>
+					<p class="header__subtitle">Personagens, localizações, episódios e muito mais</p>
 					<div class="header__theme-switcher">
-						<button class="header__btn-dark">
-							<i class="bx-moon"></i>Escuro
-						</button>
-						<button class="header__btn-light">
-							<i class="bx-sun"></i>Claro
-						</button>
+						<button class="header__btn-dark"><i class="bx-moon"></i>Escuro</button>
+						<button class="header__btn-light"><i class="bx-sun"></i>Claro</button>
 					</div>
 					<p class="header__meme">Ai sim, Porr#@%&*</p>
 				</div>
-				<img
-					class="header__img"
-					src="assets/img/RickModoEscuro.webp"
-					alt="Foto do Evil Rick"
-				/>
+				<img class="header__img" src="assets/img/RickModoEscuro.webp" alt="Foto do Evil Rick" />
 			</div>
 		</header>
 		<main>
 			<div class="main__search-container">
 				<search class="main__search">
-					<input
-						class="main__input-search"
-						type="text"
-						placeholder="Personagem, episódio, localização..."
-					/>
+					<input class="main__input-search" type="text" placeholder="Personagem, episódio, localização..." />
 					<i class="bx-search"></i>
 				</search>
 				<ul class="main__filter">
 					<li>Filtrar por:</li>
 					<li>
-						<button><i class="bx-smile"></i>Personagens</button>
+						<button id="character"><i class="bx-smile"></i>Personagens</button>
 					</li>
 					<li>
-						<button><i class="bx-planet"></i>Localizações</button>
+						<button id="location"><i class="bx-planet"></i>Localizações</button>
 					</li>
 					<li>
-						<button><i class="bx-movie-play"></i>Episódios</button>
+						<button id="episode"><i class="bx-movie-play"></i>Episódios</button>
 					</li>
 				</ul>
 			</div>
