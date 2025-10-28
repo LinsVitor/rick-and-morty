@@ -30,6 +30,11 @@ const category = {
 		ids: [0, 5],
 		step: 6,
 	},
+	location: {
+		title: "Localizações",
+		ids: [0, 5],
+		step: 6,
+	},
 };
 
 // Função responsável por atualizar as informações da tela
@@ -41,7 +46,7 @@ async function updateScreen(type, ids) {
 	switch (type) {
 		case character:
 			mainTitle.innerText = category["character"].title;
-			mainGrid.classList.remove("main__episode-grid");
+			mainGrid.classList.remove("main__global-grid");
 			mainGrid.classList.add("main__character-grid");
 
 			for (const character of elements) {
@@ -73,23 +78,23 @@ async function updateScreen(type, ids) {
 		case episode:
 			mainTitle.innerText = category["episode"].title;
 			mainGrid.classList.remove("main__character-grid");
-			mainGrid.classList.add("main__episode-grid");
+			mainGrid.classList.add("main__global-grid");
 
 			for (const episode of elements) {
 				const episodeCard = `
 				<article class="main__card">
-					<div class="main__episode-icon">
+					<div class="main__global-icon">
 						<i class="bx-movie-play"></i
 						><button class="main__fav-btn"><i class="bx-heart"></i></button>
 					</div>
-					<h3 class="main__episode-name">${truncate(episode.name, 36)}</h3>
-					<div class="main__episode-date">
-						<p class="main__episode-info">
+					<h3 class="main__global-name">${truncate(episode.name, 36)}</h3>
+					<div class="main__global-date">
+						<p class="main__global-info">
 							<i class="bx-calendar"></i>${episode.air_date}
 						</p>
-						<p class="main__episode-info"><i class="bx-tv"></i>${episode.episode}</p>
+						<p class="main__global-info"><i class="bx-tv"></i>${episode.episode}</p>
 					</div>
-					<p class="main__episode-info">
+					<p class="main__global-info">
 						<i class="bx-smile"></i>${episode.characters.length} Personagens participaram deste episódio
 					</p>
 				</article>
@@ -99,6 +104,32 @@ async function updateScreen(type, ids) {
 			mainGrid.innerHTML = cards;
 			break;
 		case location:
+			mainTitle.innerText = category["location"].title;
+			mainGrid.classList.remove("main__character-grid");
+			mainGrid.classList.add("main__global-grid");
+
+			for (const location of elements) {
+				const locationCard = `
+				<article class="main__card">
+					<div class="main__global-icon">
+						<i class="bx-planet"></i
+						><button class="main__fav-btn"><i class="bx-heart"></i></button>
+					</div>
+					<h3 class="main__global-name">${translate("origin", location.name)}</h3>
+					<div class="main__global-date">
+						<p class="main__global-info">
+							<i class="bx-globe"></i>${location.type}
+						</p>
+						<p class="main__global-info"><i class="bx-size-freeform"></i>${location.dimension}</p>
+					</div>
+					<p class="main__global-info">
+						<i class="bx-user"></i>${location.residents.length} Personagens moram nesse planeta
+					</p>
+				</article>
+				`;
+				cards += locationCard;
+			}
+			mainGrid.innerHTML = cards;
 			break;
 	}
 }
@@ -143,4 +174,8 @@ document.getElementById("episode").addEventListener("click", (event) => {
 
 document.getElementById("character").addEventListener("click", (event) => {
 	changeCategory(character, category["character"].ids, category["character"].step);
+});
+
+document.getElementById("location").addEventListener("click", (event) => {
+	changeCategory(location, category["location"].ids, category["location"].step);
 });
