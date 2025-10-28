@@ -95,31 +95,31 @@ main {
 		}
 	}
 
-	.main__episode-grid {
+	.main__global-grid {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, 24.8rem);
 		row-gap: var(--spacing);
 		column-gap: var(--spacing);
 		margin-bottom: var(--spacing-large);
 
-		.main__episode-icon {
+		.main__global-icon {
 			display: flex;
 			justify-content: space-between;
 
-			.bx-movie-play {
+			.bx-movie-play, .bx-planet {
 				font-size: var(--font-size-large);
 			}
 		}
 
-		.main__episode-name {
+		.main__global-name {
 			font-weight: 700;
 		}
 
-		.main__episode-date {
+		.main__global-date {
 			display: flex;
 			gap: var(--spacing-medium);
 		}
-		.main__episode-info {
+		.main__global-info {
 			display: flex;
 			align-items: center;
 			gap: 0.25rem;
